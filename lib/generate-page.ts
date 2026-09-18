@@ -3,6 +3,11 @@ import { google } from '@ai-sdk/google'
 import { generateObject } from 'ai'
 import { z } from 'zod'
 
+// DeepSeek lacks native JSON-schema response format, so the AI SDK injects the
+// schema into the system message and logs a compatibility warning each call.
+// Silence the SDK's warning logger to keep the Next.js dev overlay clean.
+;(globalThis as { AI_SDK_LOG_WARNINGS?: boolean }).AI_SDK_LOG_WARNINGS = false
+
 export const generatedPageSchema = z.object({
   title: z.string().max(80),
   tagline: z.string().max(140),
