@@ -31,7 +31,7 @@ export const generatedPageSchema = z.object({
 export type GeneratedPage = z.infer<typeof generatedPageSchema>
 
 const DEFAULT_MODELS = {
-  deepseek: 'deepseek-v4-flash',
+  deepseek: 'deepseek-flash',
   google: 'gemini-flash-latest',
 } as const
 
@@ -51,7 +51,7 @@ export function isGenerationConfigured(): boolean {
 
 function resolveModel() {
   const provider = activeProvider()
-  const model = process.env.AI_MODEL ?? DEFAULT_MODELS[provider]
+  const model = process.env.AI_MODEL?.trim() || DEFAULT_MODELS[provider]
 
   return provider === 'google' ? google(model) : deepseek(model)
 }
@@ -79,7 +79,10 @@ export async function generatePage(
       system: SYSTEM_PROMPT,
       prompt: `Generate a page for the path: /${path}`,
       temperature: 0.7,
-      maxOutputTokens: 1600,
+      maxOutputTokens: 4000,
+      providerOptions: {
+        deepseek: { thinking: { type: 'disabled' } },
+      },
     })
 
     return object
