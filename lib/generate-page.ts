@@ -31,7 +31,7 @@ export const generatedPageSchema = z.object({
 export type GeneratedPage = z.infer<typeof generatedPageSchema>
 
 const DEFAULT_MODELS = {
-  deepseek: 'deepseek-flash',
+  deepseek: 'deepseek-v4-flash',
   google: 'gemini-flash-latest',
 } as const
 
