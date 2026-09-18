@@ -1,9 +1,9 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
+import { Suspense } from 'react'
 
-import { GeneratedPageView } from './GeneratedPageView'
-import { generatePage } from '@/lib/generate-page'
-import { getCachedPage, setCachedPage } from '@/lib/page-cache'
+import { GeneratedPageContent } from './GeneratedPageContent'
+import { GeneratedPageSkeleton } from './GeneratedPageSkeleton'
 import { normalizeSlug } from '@/lib/slug'
 
 export const runtime = 'nodejs'
@@ -22,13 +22,15 @@ export default async function Page({ params }: PageProps) {
   const path = normalizeSlug(slug)
   if (!path) notFound()
 
-  let page = await getCachedPage(path)
+  return (
+    <article className="mx-auto max-w-2xl px-6 py-16">
+      <p className="text-muted-foreground text-xs tracking-widest uppercase">
+        yaps.gg/{path}
+      </p>
 
-  if (!page) {
-    page = await generatePage(path)
-    if (!page) notFound()
-    await setCachedPage(path, page)
-  }
-
-  return <GeneratedPageView path={path} page={page} />
+      <Suspense fallback={<GeneratedPageSkeleton />}>
+        <GeneratedPageContent path={path} />
+      </Suspense>
+    </article>
+  )
 }

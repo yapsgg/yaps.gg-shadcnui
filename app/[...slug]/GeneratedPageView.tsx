@@ -1,18 +1,8 @@
 import type { GeneratedPage } from '@/lib/generate-page'
 
-export function GeneratedPageView({
-  path,
-  page,
-}: {
-  path: string
-  page: GeneratedPage
-}) {
+export function GeneratedPageView({ page }: { page: GeneratedPage }) {
   return (
-    <article className="mx-auto max-w-2xl px-6 py-16">
-      <p className="text-muted-foreground text-xs tracking-widest uppercase">
-        yaps.gg/{path}
-      </p>
-
+    <>
       <h1 className="mt-3 text-4xl font-bold tracking-tight">{page.title}</h1>
       <p className="text-muted-foreground mt-3 text-lg">{page.tagline}</p>
       <p className="mt-6 leading-relaxed">{page.intro}</p>
@@ -61,6 +51,6 @@ export function GeneratedPageView({
           ))}
         </div>
       )}
-    </article>
+    </>
   )
 }
