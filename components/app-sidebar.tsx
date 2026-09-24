@@ -10,6 +10,7 @@ import {
   Box,
   Boxes,
   Calendar,
+  ClipboardList,
   Command,
   FlaskConicalIcon,
   Frame,
@@ -37,9 +38,11 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
 import { EMAIL_URL, BOOK_A_CALL_URL, NAME, IMAGE_URL, EMAIL_URL_LINK } from "@/lib/constants"
+import { getApplicationBySlug } from "@/lib/applications"
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const pathname = usePathname()
+  const activeProgram = getApplicationBySlug(pathname.split("/")[1] ?? "")
   
   const data = {
     user: {
@@ -77,6 +80,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         url: "/experience",
         icon: Box,
         isActive: pathname.startsWith("/experience"),
+      },
+      {
+        title: "Apply",
+        url: "/apply",
+        icon: ClipboardList,
+        isActive: pathname.startsWith("/apply") || Boolean(activeProgram),
       },
       {
         title: "Applications",

@@ -11,9 +11,10 @@ import {
 } from "@/components/ui/breadcrumb"
 import { Separator } from "@/components/ui/separator"
 import { SidebarTrigger } from "@/components/ui/sidebar"
-import { BookOpen, FlaskConicalIcon, LifeBuoy, Send, SquareTerminal, Boxes, Moon, Sun, Sparkles, MoonStar, SunDim, Briefcase, Backpack, Box, Frame, PackageOpen, Copy, HandHeart } from "lucide-react"
+import { BookOpen, FlaskConicalIcon, LifeBuoy, Send, SquareTerminal, Boxes, Moon, Sun, Sparkles, MoonStar, SunDim, Briefcase, Backpack, Box, Frame, PackageOpen, Copy, HandHeart, ClipboardList } from "lucide-react"
 import Link from "next/link"
 import { useTheme } from "next-themes"
+import { getApplicationBySlug } from "@/lib/applications"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -33,10 +34,22 @@ export default function PageHeader() {
   
   // Get page title and icon based on current route
   const getPageInfo = () => {
+    const activeProgram = getApplicationBySlug(pathname.split("/")[1] ?? "")
+
     if (pathname === "/") {
       return {
         title: "Playground",
         icon: <SquareTerminal className="h-5 w-5" />,
+      }
+    } else if (pathname.startsWith("/apply")) {
+      return {
+        title: "Apply",
+        icon: <ClipboardList className="h-5 w-5" />,
+      }
+    } else if (activeProgram) {
+      return {
+        title: activeProgram.name,
+        icon: <ClipboardList className="h-5 w-5" />,
       }
     } else if (pathname.startsWith("/tutorial")) {
       return {
