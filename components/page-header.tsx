@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/breadcrumb"
 import { Separator } from "@/components/ui/separator"
 import { SidebarTrigger } from "@/components/ui/sidebar"
-import { BookOpen, FlaskConicalIcon, LifeBuoy, Send, SquareTerminal, Boxes, Moon, Sun, Sparkles, MoonStar, SunDim, Briefcase, Backpack, Box, Frame, PackageOpen, Copy, HandHeart, ClipboardList } from "lucide-react"
+import { BookOpen, FlaskConicalIcon, LifeBuoy, Send, SquareTerminal, Boxes, Moon, Sun, Sparkles, MoonStar, SunDim, Briefcase, Backpack, Box, Flame, Frame, PackageOpen, Copy, HandHeart, ClipboardList } from "lucide-react"
 import Link from "next/link"
 import { useTheme } from "next-themes"
 import { getApplicationBySlug } from "@/lib/applications"
@@ -45,6 +45,11 @@ export default function PageHeader() {
       return {
         title: "Apply",
         icon: <ClipboardList className="h-5 w-5" />,
+      }
+    } else if (pathname.startsWith("/fuck-9-5-build-something-great")) {
+      return {
+        title: "fuck the 9-5",
+        icon: <Flame className="h-5 w-5" />,
       }
     } else if (activeProgram) {
       return {
